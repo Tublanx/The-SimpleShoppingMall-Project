@@ -1,5 +1,7 @@
 package helloshop.entity;
 
+import helloshop.entity.item.Item;
+
 import javax.persistence.*;
 
 @Entity
