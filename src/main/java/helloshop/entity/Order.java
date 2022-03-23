@@ -30,6 +30,44 @@ public class Order extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private OrderStatus status;
 
+    // 생성 메소드
+    public static Order createOrder(Member member, Delivery delivery, OrderItem... orderItems) {
+        Order order = new Order();
+        order.setMember(member);
+        order.setDelivery(delivery);
+
+        for (var item : orderItems) {
+            order.addOrderItem(item);
+        }
+
+        order.setStatus(OrderStatus.ORDER);
+        order.setOrderDate(new Date());
+
+        return order;
+    }
+
+    // 주문 취소
+    public void cancel() {
+        if (delivery.getStatus() == DeliveryStatus.COMP) {
+            throw new RuntimeException("이미 배송완료된 상품은 취소가 불가능합니다.");
+        }
+
+        this.setStatus(OrderStatus.CANCEL);
+        for (var item : orderItems) {
+            item.cancel();
+        }
+    }
+
+    //전체 주문 가격 조회
+    public int getTotalPrice() {
+        int totalPrice = 0;
+        for (var item : orderItems) {
+            totalPrice += item.getTotalPrice();
+        }
+
+        return totalPrice;
+    }
+
     public Long getId() {
         return id;
     }
