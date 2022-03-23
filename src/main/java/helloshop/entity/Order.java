@@ -25,7 +25,6 @@ public class Order extends BaseEntity {
     @JoinColumn(name = "delivery_id")
     private Delivery delivery;
 
-    @Temporal(TemporalType.TIMESTAMP)
     private Date orderDate;
 
     @Enumerated(EnumType.STRING)
@@ -44,12 +43,7 @@ public class Order extends BaseEntity {
     }
 
     public void setMember(Member member) {
-        if(this.member != null) {
-            this.member.getOrders().remove(this);
-        }
-
         this.member = member;
-
         member.getOrders().add(this);
     }
 
@@ -57,7 +51,6 @@ public class Order extends BaseEntity {
         orderItems.add(orderItem);
         orderItem.setOrder(this);
     }
-
 
     public List<OrderItem> getOrderItems() {
         return orderItems;
@@ -89,5 +82,6 @@ public class Order extends BaseEntity {
 
     public void setDelivery(Delivery delivery) {
         this.delivery = delivery;
+        delivery.setOrder(this);
     }
 }

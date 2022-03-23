@@ -9,7 +9,8 @@ import java.util.List;
 @Entity
 public class Category {
 
-    @Id @GeneratedValue
+    @Id
+    @GeneratedValue
     @Column(name = "category_id")
     private Long id;
 
@@ -19,9 +20,12 @@ public class Category {
     @JoinTable(name = "category_item", joinColumns = @JoinColumn(name = "category_id"), inverseJoinColumns = @JoinColumn(name = "item_id"))
     private List<Item> items = new ArrayList<>();
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "parent_id")
     private Category parent;
+
+    @OneToMany(mappedBy = "parent")
+    private List<Category> child = new ArrayList<>();
 
     public Long getId() {
         return id;
@@ -62,9 +66,6 @@ public class Category {
     public void setChild(List<Category> child) {
         this.child = child;
     }
-
-    @OneToMany(mappedBy = "parent")
-    private List<Category> child = new ArrayList<>();
 
     public void addChildCategory(Category child) {
         this.child.add(child);
