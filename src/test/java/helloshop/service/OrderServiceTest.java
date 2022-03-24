@@ -34,7 +34,6 @@ class OrderServiceTest {
     void order() throws Exception {
         Member member = createMember();
         Book book = createBook("시골JPA", 10000, 10);
-        int stockQuantity = 10;
 
         int orderCount = 2;
 
@@ -46,6 +45,18 @@ class OrderServiceTest {
         assertEquals(1, getOrder.getOrderItems().size());
         assertEquals(10000 * 2, getOrder.getTotalPrice());
         assertEquals(8, book.getStockQuantity());
+    }
+
+    @Test
+    void over() throws Exception {
+        Member member = createMember();
+        Book book = createBook("시골JPA", 10000, 10);
+
+        int orderCount = 11;
+
+        orderService.order(member.getId(), book.getId(), orderCount);
+
+        fail("재고 수량 초과 예외가 발생");
     }
 
     private Member createMember() {
