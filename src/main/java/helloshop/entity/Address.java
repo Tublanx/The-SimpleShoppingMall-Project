@@ -1,5 +1,7 @@
 package helloshop.entity;
 
+import lombok.AllArgsConstructor;
+
 import javax.persistence.Embeddable;
 import java.util.Objects;
 
@@ -9,6 +11,15 @@ public class Address {
     private String city;
     private String street;
     private String zipcode;
+
+    public Address() {
+    }
+
+    public Address(String city, String street, String zipcode) {
+        this.city = city;
+        this.street = street;
+        this.zipcode = zipcode;
+    }
 
     public String getCity() {
         return city;

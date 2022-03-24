@@ -61,11 +61,7 @@ class OrderServiceTest {
 
     private Member createMember() {
         Member member = new Member();
-        Address address = new Address();
-
-        address.setCity("서울");
-        address.setStreet("강가");
-        address.setZipcode("123-123");
+        Address address = new Address("서울", "강가", "123-123");
 
         member.setName("회원1");
         member.setAddress(address);

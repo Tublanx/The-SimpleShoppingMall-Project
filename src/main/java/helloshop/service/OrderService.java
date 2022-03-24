@@ -2,8 +2,7 @@ package helloshop.service;
 
 import helloshop.entity.*;
 import helloshop.entity.item.Item;
-import helloshop.repository.ItemRepository;
-import helloshop.repository.MemberRepository;
+import helloshop.repository.MemberRepositoryOld;
 import helloshop.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,7 +15,7 @@ import java.util.List;
 public class OrderService {
 
     @Autowired
-    MemberRepository memberRepository;
+    MemberRepositoryOld memberRepository;
 
     @Autowired
     OrderRepository orderRepository;
