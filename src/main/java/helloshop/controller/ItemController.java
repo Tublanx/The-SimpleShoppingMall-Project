@@ -7,8 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequiredArgsConstructor
@@ -39,6 +38,18 @@ public class ItemController {
         book.setIsbn(bookForm.getIsbn());
 
         itemService.saveItem(book);
+        return "redirect:/items";
+    }
+
+    @RequestMapping(value = "/items/{itemId}/edit", method = RequestMethod.GET)
+    public String updateItemForm(@PathVariable("itemId") Long itemId, Model model) {
+        model.addAttribute("item", itemService.findOne(itemId));
+        return "items/updateItemForm";
+    }
+
+    @PostMapping("/items/{itemId}/edit")
+    public String updateItem(@ModelAttribute("item") Book item) {
+        itemService.saveItem(item);
         return "redirect:/items";
     }
 
